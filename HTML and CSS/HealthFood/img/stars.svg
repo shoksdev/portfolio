@@ -1,0 +1,32 @@
+<svg width="120" height="19" viewBox="0 0 120 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_10_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="19">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10 15.27L16.18 19L14.54 11.97L20 7.24L12.81 6.63L10 0L7.19 6.63L0 7.24L5.46 11.97L3.82 19L10 15.27Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_10_2)">
+<rect x="-3" y="-3" width="26" height="26" fill="#4D4D4D"/>
+</g>
+<mask id="mask1_10_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="25" y="0" width="20" height="19">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M35 15.27L41.18 19L39.54 11.97L45 7.24L37.81 6.63L35 0L32.19 6.63L25 7.24L30.46 11.97L28.82 19L35 15.27Z" fill="white"/>
+</mask>
+<g mask="url(#mask1_10_2)">
+<rect x="22" y="-3" width="26" height="26" fill="#4D4D4D"/>
+</g>
+<mask id="mask2_10_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="50" y="0" width="20" height="19">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M60 15.27L66.18 19L64.54 11.97L70 7.24L62.81 6.63L60 0L57.19 6.63L50 7.24L55.46 11.97L53.82 19L60 15.27Z" fill="white"/>
+</mask>
+<g mask="url(#mask2_10_2)">
+<rect x="47" y="-3" width="26" height="26" fill="#4D4D4D"/>
+</g>
+<mask id="mask3_10_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="75" y="0" width="20" height="19">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M95 7.24L87.81 6.62L85 0L82.19 6.63L75 7.24L80.46 11.97L78.82 19L85 15.27L91.18 19L89.55 11.97L95 7.24ZM85 13.4V4.1L86.71 8.14L91.09 8.52L87.77 11.4L88.77 15.68L85 13.4Z" fill="white"/>
+</mask>
+<g mask="url(#mask3_10_2)">
+<rect x="72" y="-3" width="26" height="26" fill="#4D4D4D"/>
+</g>
+<mask id="mask4_10_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="100" y="0" width="20" height="19">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M120 7.24L112.81 6.62L110 0L107.19 6.63L100 7.24L105.46 11.97L103.82 19L110 15.27L116.18 19L114.55 11.97L120 7.24ZM110 13.4L106.24 15.67L107.24 11.39L103.92 8.51L108.3 8.13L110 4.1L111.71 8.14L116.09 8.52L112.77 11.4L113.77 15.68L110 13.4Z" fill="white"/>
+</mask>
+<g mask="url(#mask4_10_2)">
+<rect x="97" y="-3" width="26" height="26" fill="#4D4D4D"/>
+</g>
+</svg>

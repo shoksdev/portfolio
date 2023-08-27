@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css" media="all">
+    <title>Главная</title>
+</head>
+<body>
+    <div class="shell">
+        <div class="border">
+    
+            <div id="navigation">
+                <ul>
+                    <li><a href="/" class="active">Главная</a></li>
+                    <li><a href="/admin">Админ панель</a></li>
+                    
+                </ul>
+            </div>
+    
+            <div id="main">
+                <div id="content" class="left">
+                    
+                    <div class="projects">
+                        <h3>{{ article.title }}</h3>
+                        <p align="center">
+                            <img src="{{ article.image.url }}" width="50%" /></a>
+                        </p>
+                        <div class="item">
+                            <div class="text left">
+                                <p>{{ article.content }}</p>
+                                <p>Автор: {{ article.author }}</p>
+                            </div>
+                            <div class="cl">&nbsp;</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cl">&nbsp;</div>
+            </div>
+            <div>
+                <br>
+                <p>Понравилось: {{ article.articlelike_set.all.count }}</p>
+                <br>
+                <a href="{% url 'main:add_article_like' article.id %}">Нравится</a>
+                <a href="{% url 'main:del_article_like' article.id %}">Не Нравится</a>
+            </div>
+            <div class="comment">
+                <h3>Оставить комментарий</h3>
+                <div>
+                    <form action="{% url 'main:add_comment' article.id %}" method="post">
+                        {% csrf_token %}
+                        <div>
+                            <label>Ваш комментарий</label>
+                            <textarea name="content" id="" cols="30" rows="10"></textarea>
+                        </div>
+                        <div>
+                            <label>Ваш никнейм*</label>
+                            <input type="text" name="nickname">
+                        </div>
+                        <div>
+                            <label>Ваш адрес электронной почты*</label>
+                            <input type="email" name="email">
+                        </div>
+                        <input type="submit">
+                    </form>
+                </div>
+            </div>
+            <div>
+                {% for comment in article.comment_set.all %}
+                <div class="view-comment">
+                    <h4>{{ comment.nickname }}</h4>
+                    <p>{{ comment.content }}</p>
+                    <div>
+                        <br>
+                        <p>Понравилось: {{ comment.commentlike_set.all.count }}</p>
+                        <br>
+                        <a href="{% url 'main:add_comment_like' article.id comment.id %}">Нравится</a>
+                        <a href="{% url 'main:del_comment_like' article.id comment.id %}">Не Нравится</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div> 
+        </div>
+        
+        <div id="footer">
+            <p class="copy right">Copyright &copy;  2022 </p>
+        </div>
+</body>
+</html>

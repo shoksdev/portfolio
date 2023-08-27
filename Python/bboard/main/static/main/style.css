@@ -1,0 +1,19 @@
+header h1 {
+    background: url("bg1.jpg") left / auto 100% no-repeat, url("bg2.jpg") right / auto 100% no-repeat;
+}
+.root {
+    font-size: larger;
+}
+.forgot_password {
+    position: relative;
+    left: 335px;
+    font-size: 18px;
+}
+
+img.main-image {
+    width: 300px;
+}
+
+img.additional-image {
+    width: 180px;
+}

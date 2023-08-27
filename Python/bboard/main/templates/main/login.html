@@ -1,0 +1,30 @@
+{% extends "layout/basic.html" %}
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Вход{% endblock %}</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    {% bootstrap_javascript jquery='slim' %}
+</head>
+<body>
+    {% block content %}
+    <h2>Вход</h2>
+    {% if user.is_authenticated %}
+    <p>Вы уже выполнили вход.</p>
+    {% else %}
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+        <a href="{% url 'main:password_reset' %}" class="forgot_password">Забыли пароль?</a>
+        {% buttons submit='Войти' %}{% endbuttons %}
+    </form>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>

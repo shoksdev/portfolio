@@ -1,0 +1,5 @@
+@media(max-width: 576px) {
+    #main {
+        max-width: 66.666667%;
+    }
+}
