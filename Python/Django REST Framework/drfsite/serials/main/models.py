@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+
+# Таблица со всеми жанрами
 class Genre(models.Model):
     title = models.CharField(max_length=20, verbose_name='Название')
     desc = models.TextField(verbose_name='Описание')
@@ -9,6 +11,7 @@ class Genre(models.Model):
         return self.title
 
 
+# Таблица со всеми сериалами
 class Serial(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
     desc = models.TextField(verbose_name='Описание')
