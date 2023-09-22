@@ -1,0 +1,1127 @@
+{
+	"info": {
+		"_postman_id": "bf05e473-4f92-44bd-aecd-c2e3b5d1c65a",
+		"name": "Simple_Buy_Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29187056"
+	},
+	"item": [
+		{
+			"name": "General Requirements",
+			"item": [
+				{
+					"name": "Auth admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@shop.ru",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "QWEasd123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"auth_token": "b91ce4d81f4db628f015f5d578f53cc24deca4d3"
+						}
+					]
+				},
+				{
+					"name": "Auth user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "user@shop.ru",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password$",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/token/login/?username=test1&password=Qwerty1234!",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "test1"
+								},
+								{
+									"key": "password",
+									"value": "Qwerty1234!"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"auth_token": "aeae3b60a75d1826c3a9ddfb5955cb50ed0b023e"
+						}
+					]
+				},
+				{
+					"name": "Login failed",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/carts/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"detail": "Учетные данные не были предоставлены."
+						}
+					]
+				},
+				{
+					"name": "Forbidden for you",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token aeae3b60a75d1826c3a9ddfb5955cb50ed0b023e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"1",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"detail": "У вас недостаточно прав для выполнения данного действия."
+						}
+					]
+				},
+				{
+					"name": "Not found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/150/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"150",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"detail": "Страница не найдена."
+						}
+					]
+				},
+				{
+					"name": "Validation Error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"price": [
+								"Требуется численное значение."
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Specific Requirements",
+			"item": [
+				{
+					"name": "Authentication (Succeeded)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@shop.ru",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "QWEasd123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"auth_token": "b91ce4d81f4db628f015f5d578f53cc24deca4d3"
+						}
+					]
+				},
+				{
+					"name": "Authentication (Failed)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "admin@shop.ru",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "QWEasd1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/token/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"login",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"non_field_errors": [
+								"Невозможно войти с предоставленными учетными данными."
+							]
+						}
+					]
+				},
+				{
+					"name": "Registration (Succeeded)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "Тестов Тест Тестович",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test1234@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "QWEasd123$",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/users/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"users",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"username": "Тестов Тест Тестович",
+							"email": "test1234@gmail.com",
+							"id": 4
+						}
+					]
+				},
+				{
+					"name": "Registration (Failed)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test123gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "QWEasd123$",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/users/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"users",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"username": [
+								"Обязательное поле."
+							],
+							"email": [
+								"Введите правильный адрес электронной почты."
+							]
+						}
+					]
+				},
+				{
+					"name": "All Products",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"count": 9,
+							"next": "http://127.0.0.1:8000/api/v1/products/?page=2",
+							"previous": null,
+							"results": [
+								{
+									"id": 1,
+									"title": "Django 3.0. Практика создания веб-сайтов на Python",
+									"desc": "Книга посвящена созданию веб-сайтов на языке Python с использованием веб-фреймворка Django 3.0. Рассмотрены новинки Django 3.0 и дано наиболее полное описание его инструментов: моделей, контроллеров, шаблонов, средств обработки пользовательского ввода, включая выгруженные файлы, разграничения доступа, посредников, сигналов, инструментов для отправки электронной почты, кэширования и пр. Рассмотрены дополнительные библиотеки, производящие обработку BBCode-тегов, CAPTCHA, вывод графических миниатюр, аутентификацию через социальные сети (в частности, \"ВКонтакте\"), интеграцию с Bootstrap. Рассказано о программировании веб-служб REST, использовании и настройке административного веб-сайта Django, публикации сайтов с помощью веб-сервера Uvicorn, работе с базами данных PostgreSQL, кэшировании сайтов с помощью Memcached и Redi. Подробно описано создание полнофункционального веб-сайта - электронной доски объявлений, веб-службы, работающей в его составе, и тестового фронтенда для нее, написанного на Angular.\r\nЭлектронное приложение-архив на сайте издательства содержит коды всех примеров.",
+									"price": 1331.0
+								},
+								{
+									"id": 3,
+									"title": "Ноутбук MSI Titan GT77 HX 13VI-096RU",
+									"desc": "Ноутбук MSI Titan GT77 HX 13VI-096RU создан для требовательных геймеров. В нем сочетаются мощная аппаратная платформа, продуманная эргономика, стабильность и технологичность. Высокая производительность при запуске игр достигается благодаря процессору Intel Core i9, графическому адаптеру GeForce RTX 4090 от NVIDIA, 32 ГБ оперативной памяти и накопителю SSD на 2000 ГБ. Стабильный режим при любых нагрузках обеспечивается эффективной системой охлаждения с двумя вентиляторами и тепловыми трубками.\r\nMSI Titan GT77 HX оборудован экраном 17.3 дюйма IPS UltraHD, на котором отображается детализированное и красочное изображение. Частота 144 Гц помогает исключить искажение графики в динамичных играх. Акустическая система формирует насыщенный чистый звук. Из других особенностей – клавиатура с подсветкой ARGB, широкий ряд проводных и беспроводных интерфейсов, продолжительная автономность и поддержка технологии ускоренной зарядки.",
+									"price": 435999.0
+								},
+								{
+									"id": 4,
+									"title": "GIGABYTE GeForce RTX 4090 GAMING OC",
+									"desc": "Видеокарта GIGABYTE GeForce RTX 4090 GAMING OC предлагает высокую производительность и широкие графические возможности при поддержке искусственного интеллекта. Модель с архитектурой NVIDIA Ada Lovelace и 24 ГБ памяти стандарта GDDR6X создана для игр и разработки контента. Тактовая частота процессора составляет 2230 МГц.\r\nИз интерфейсов с боковой стороны видеокарты предлагаются 3 разъема DisplayPort и 1 разъем HDMI. Активное охлаждение с двумя вентиляторами быстро рассеивает тепло и поддерживает низкую температуру нагрева. Плата с усиленной подсистемой питания, отборные компоненты и дополнительные предохранители гарантируют стабильность работы. Защитная пластина на тыловой стороне делает видеокарту устойчивой к деформации. Из преимуществ GIGABYTE GeForce RTX 4090 GAMING OC – программируемая подсветка RGB.",
+									"price": 200999.0
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Add Product in Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/carts/17/items/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"17",
+								"items",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"id": 27,
+							"product_id": 1,
+							"quantity": 3
+						}
+					]
+				},
+				{
+					"name": "All Products in Cart",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/carts/17/items/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"17",
+								"items",
+								""
+							]
+						}
+					},
+					"response": [
+						[
+							{
+								"id": 8,
+								"cart": 17,
+								"product": {
+									"id": 5,
+									"title": "Sony PlayStation 5 Digital Edition CFI-1200B",
+									"desc": "Игровая приставка PlayStation 5 Digital Edition CFI-1200B представлена в корпусе черно-белой расцветки. Модель изготовлена на основе технологии HDR. Высокопроизводительный процессор обеспечивает оперативную загрузку программного обеспечения и быструю обработку запросов. Игровая приставка оснащена твердотельным накопителем SSD объемом 825 Гб. Интегрированная система ввода и вывода обеспечивает быструю передачу данных.\r\nВозможность беспроводной передачи данных предоставляет модуль Wi-Fi. Встроенный Bluetooth версии 5.1 синхронизирует приставку со сторонними устройствами. На корпусе находятся один разъем HDMI, два порта USB 3.0, LAN-разъем для подключения проводного интернета. Приставка работает от электрической сети. В комплект входят блок питания, кабели USB и HDMI, один геймпад.\r\nДля данного товара может понадобится переходник на российскую вилку.",
+									"price": 58999.0
+								},
+								"quantity": 3,
+								"total_item": 176997.0
+							},
+							{
+								"id": 27,
+								"cart": 17,
+								"product": {
+									"id": 1,
+									"title": "Django 3.0. Практика создания веб-сайтов на Python",
+									"desc": "Книга посвящена созданию веб-сайтов на языке Python с использованием веб-фреймворка Django 3.0. Рассмотрены новинки Django 3.0 и дано наиболее полное описание его инструментов: моделей, контроллеров, шаблонов, средств обработки пользовательского ввода, включая выгруженные файлы, разграничения доступа, посредников, сигналов, инструментов для отправки электронной почты, кэширования и пр. Рассмотрены дополнительные библиотеки, производящие обработку BBCode-тегов, CAPTCHA, вывод графических миниатюр, аутентификацию через социальные сети (в частности, \"ВКонтакте\"), интеграцию с Bootstrap. Рассказано о программировании веб-служб REST, использовании и настройке административного веб-сайта Django, публикации сайтов с помощью веб-сервера Uvicorn, работе с базами данных PostgreSQL, кэшировании сайтов с помощью Memcached и Redi. Подробно описано создание полнофункционального веб-сайта - электронной доски объявлений, веб-службы, работающей в его составе, и тестового фронтенда для нее, написанного на Angular.\r\nЭлектронное приложение-архив на сайте издательства содержит коды всех примеров.",
+									"price": 1331.0
+								},
+								"quantity": 3,
+								"total_item": 3993.0
+							}
+						]
+					]
+				},
+				{
+					"name": "Delete Product from Cart (Succeeded)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/carts/17/items/27/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"17",
+								"items",
+								"27",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product from Cart (Failed)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token aeae3b60a75d1826c3a9ddfb5955cb50ed0b023e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/carts/17/items/8/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"17",
+								"items",
+								"8",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"detail": "У вас недостаточно прав для выполнения данного действия."
+						}
+					]
+				},
+				{
+					"name": "Create Order (Succeeded)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cart_id",
+									"value": "17",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/orders/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"cart_id": 17
+						}
+					]
+				},
+				{
+					"name": "Create Order (Failed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cart_id",
+									"value": "15",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/orders/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": [
+						[
+							"Ваша корзина пуста."
+						]
+					]
+				},
+				{
+					"name": "All Orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token aeae3b60a75d1826c3a9ddfb5955cb50ed0b023e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/orders/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								""
+							]
+						}
+					},
+					"response": [
+						[
+							{
+								"id": 3,
+								"placed": "2023-09-18T14:01:42.025773Z",
+								"status": "О",
+								"owner": 2,
+								"items": [
+									{
+										"id": 4,
+										"product": {
+											"id": 3,
+											"title": "Ноутбук MSI Titan GT77 HX 13VI-096RU",
+											"desc": "Ноутбук MSI Titan GT77 HX 13VI-096RU создан для требовательных геймеров. В нем сочетаются мощная аппаратная платформа, продуманная эргономика, стабильность и технологичность. Высокая производительность при запуске игр достигается благодаря процессору Intel Core i9, графическому адаптеру GeForce RTX 4090 от NVIDIA, 32 ГБ оперативной памяти и накопителю SSD на 2000 ГБ. Стабильный режим при любых нагрузках обеспечивается эффективной системой охлаждения с двумя вентиляторами и тепловыми трубками.\r\nMSI Titan GT77 HX оборудован экраном 17.3 дюйма IPS UltraHD, на котором отображается детализированное и красочное изображение. Частота 144 Гц помогает исключить искажение графики в динамичных играх. Акустическая система формирует насыщенный чистый звук. Из других особенностей – клавиатура с подсветкой ARGB, широкий ряд проводных и беспроводных интерфейсов, продолжительная автономность и поддержка технологии ускоренной зарядки.",
+											"price": 435999.0
+										},
+										"quantity": 3
+									},
+									{
+										"id": 5,
+										"product": {
+											"id": 5,
+											"title": "Sony PlayStation 5 Digital Edition CFI-1200B",
+											"desc": "Игровая приставка PlayStation 5 Digital Edition CFI-1200B представлена в корпусе черно-белой расцветки. Модель изготовлена на основе технологии HDR. Высокопроизводительный процессор обеспечивает оперативную загрузку программного обеспечения и быструю обработку запросов. Игровая приставка оснащена твердотельным накопителем SSD объемом 825 Гб. Интегрированная система ввода и вывода обеспечивает быструю передачу данных.\r\nВозможность беспроводной передачи данных предоставляет модуль Wi-Fi. Встроенный Bluetooth версии 5.1 синхронизирует приставку со сторонними устройствами. На корпусе находятся один разъем HDMI, два порта USB 3.0, LAN-разъем для подключения проводного интернета. Приставка работает от электрической сети. В комплект входят блок питания, кабели USB и HDMI, один геймпад.\r\nДля данного товара может понадобится переходник на российскую вилку.",
+											"price": 58999.0
+										},
+										"quantity": 35
+									}
+								]
+							}
+						]
+					]
+				},
+				{
+					"name": "Logout User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token aeae3b60a75d1826c3a9ddfb5955cb50ed0b023e",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/auth/token/logout/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"auth",
+								"token",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product (Succeeded)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "СОЮЗ 017 TUBE",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "017 TUBE быстро стал вокальным микрофоном номер один для таких исполнителей как Coldplay, Radiohead, Shawn Mendes, the Lumineers, Paramore и многих других. Хорошо известные продюсеры, такие как Nigel Godrich (Radiohead, Paul McCartney, Beck), Ryan Hewitt (Red Hot Chili Peppers, the Lumineers, Lady Gaga), Sylvia Massy (Prince, Johnny Cash), и Butch Walker (Pink, Katy Perry, Taylor Swift, Avril Lavigne) используют этот микрофон как основной в своей работе.",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "249990",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"id": 12,
+							"title": "СОЮЗ 017 TUBE",
+							"desc": "017 TUBE быстро стал вокальным микрофоном номер один для таких исполнителей как Coldplay, Radiohead, Shawn Mendes, the Lumineers, Paramore и многих других. Хорошо известные продюсеры, такие как Nigel Godrich (Radiohead, Paul McCartney, Beck), Ryan Hewitt (Red Hot Chili Peppers, the Lumineers, Lady Gaga), Sylvia Massy (Prince, Johnny Cash), и Butch Walker (Pink, Katy Perry, Taylor Swift, Avril Lavigne) используют этот микрофон как основной в своей работе.",
+							"price": 249990.0
+						}
+					]
+				},
+				{
+					"name": "Add Product (Failed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "СОЮЗ 017 TUBE",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "017 TUBE быстро стал вокальным микрофоном номер один для таких исполнителей как Coldplay, Radiohead, Shawn Mendes, the Lumineers, Paramore и многих других. Хорошо известные продюсеры, такие как Nigel Godrich (Radiohead, Paul McCartney, Beck), Ryan Hewitt (Red Hot Chili Peppers, the Lumineers, Lady Gaga), Sylvia Massy (Prince, Johnny Cash), и Butch Walker (Pink, Katy Perry, Taylor Swift, Avril Lavigne) используют этот микрофон как основной в своей работе.",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "249 990",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"price": [
+								"Требуется численное значение."
+							]
+						}
+					]
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/10/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"10",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token b91ce4d81f4db628f015f5d578f53cc24deca4d3",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "СОЮЗ 017 (test)",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "017 TUBE быстро стал вокальным микрофоном номер один для таких исполнителей как Coldplay, Radiohead, Shawn Mendes, the Lumineers, Paramore и многих других. Хорошо известные продюсеры, такие как Nigel Godrich (Radiohead, Paul McCartney, Beck), Ryan Hewitt (Red Hot Chili Peppers, the Lumineers, Lady Gaga), Sylvia Massy (Prince, Johnny Cash), и Butch Walker (Pink, Katy Perry, Taylor Swift, Avril Lavigne) используют этот микрофон как основной в своей работе.",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "249990",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/products/12/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"12",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"id": 12,
+							"title": "СОЮЗ 017 (test)",
+							"desc": "017 TUBE быстро стал вокальным микрофоном номер один для таких исполнителей как Coldplay, Radiohead, Shawn Mendes, the Lumineers, Paramore и многих других. Хорошо известные продюсеры, такие как Nigel Godrich (Radiohead, Paul McCartney, Beck), Ryan Hewitt (Red Hot Chili Peppers, the Lumineers, Lady Gaga), Sylvia Massy (Prince, Johnny Cash), и Butch Walker (Pink, Katy Perry, Taylor Swift, Avril Lavigne) используют этот микрофон как основной в своей работе.",
+							"price": 249990.0
+						}
+					]
+				}
+			]
+		}
+	]
+}
