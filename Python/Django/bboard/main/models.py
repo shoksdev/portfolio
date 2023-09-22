@@ -100,9 +100,3 @@ def post_save_dispatcher(sender, **kwargs):
         send_new_comment_notification(kwargs['instance'])
 
 post_save.connect(post_save_dispatcher, sender=Comment)
-
-
-
-
-
-

@@ -21,7 +21,8 @@ from .utilities import signer
 from django.views.generic.edit import DeleteView
 from django.contrib.auth import logout
 from django.contrib import messages
-from django.contrib.auth.views import PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, PasswordResetView
+from django.contrib.auth.views import PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, \
+    PasswordResetView
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import SubRubric, Bb
@@ -37,6 +38,7 @@ def index(request):
     context = {'bbs': bbs}
     return render(request, 'main/index.html', context)
 
+
 def other_page(request, page):
     try:
         template = get_template('main/' + page + '.html')
@@ -44,8 +46,10 @@ def other_page(request, page):
         raise Http404
     return HttpResponse(template.render(request=request))
 
+
 class BBLoginView(LoginView):
     template_name = 'main/login.html'
+
 
 @login_required
 def profile(request):
@@ -53,8 +57,10 @@ def profile(request):
     context = {'bbs': bbs}
     return render(request, 'main/profile.html', context)
 
+
 class BBLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'main/logout.html'
+
 
 class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = AdvUser
@@ -72,10 +78,12 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
 
+
 class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin, PasswordChangeView):
     template_name = 'main/password_change.html'
     success_url = reverse_lazy('main:profile')
     success_message = 'Пароль успешно изменен'
+
 
 class RegisterUserView(CreateView):
     model = AdvUser
@@ -83,8 +91,10 @@ class RegisterUserView(CreateView):
     form_class = RegisterUserForm
     success_url = reverse_lazy('main:register_done')
 
+
 class RegisterDoneView(TemplateView):
     template_name = 'main/register_done.html'
+
 
 def user_activate(request, sign):
     try:
@@ -100,6 +110,7 @@ def user_activate(request, sign):
         user.is_activated = True
         user.save()
     return render(request, template)
+
 
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     model = AdvUser
@@ -120,21 +131,26 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
 
+
 class BBPasswordResetView(PasswordResetView, LoginRequiredMixin):
     template_name = 'main/password_reset.html'
     subject_template_name = 'email/password_reset_letter_subject.txt'
     email_template_name = 'email/password_reset_letter_body.txt'
     success_url = reverse_lazy('main:password_reset_done')
 
+
 class BBPasswordResetDoneView(PasswordResetDoneView):
     template_name = 'main/password_reset_done.html'
+
 
 class BBPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = 'main/password_reset_confirm.html'
     success_url = reverse_lazy('main:password_reset_complete')
 
+
 class BBPasswordResetCompleteView(PasswordResetCompleteView):
     template_name = 'main/password_reset_complete.html'
+
 
 def by_rubric(request, pk):
     rubric = get_object_or_404(SubRubric, pk=pk)
@@ -153,6 +169,7 @@ def by_rubric(request, pk):
     page = pagingator.get_page(page_num)
     context = {'rubric': rubric, 'page': page, 'bbs': page.object_list, 'form': form}
     return render(request, 'main/by_rubric.html', context)
+
 
 def detail(request, rubric_pk, pk):
     bb = Bb.objects.get(pk=pk)
@@ -176,11 +193,13 @@ def detail(request, rubric_pk, pk):
     context = {'bb': bb, 'ais': ais, 'comments': comments, 'form': form}
     return render(request, 'main/detail.html', context)
 
+
 def profile_bb_detail(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
     ais = bb.additionalimage_set.all()
     context = {'bb': bb, 'ais': ais}
     return render(request, 'main/profile_detail.html', context)
+
 
 @login_required
 def profile_bb_add(request):
@@ -199,6 +218,7 @@ def profile_bb_add(request):
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_add.html', context)
 
+
 @login_required
 def profile_bb_delete(request, pk):
     bb = get_object_or_404(Bb, pk=pk)
@@ -209,6 +229,7 @@ def profile_bb_delete(request, pk):
     else:
         context = {'bb': bb}
         return render(request, 'main/profile_bb_delete.html', context)
+
 
 @login_required
 def profile_bb_change(request, pk):
@@ -227,14 +248,3 @@ def profile_bb_change(request, pk):
         formset = AIFormSet(instance=bb)
     context = {'form': form, 'formset': formset}
     return render(request, 'main/profile_bb_change.html', context)
-
-
-
-
-
-
-
-
-
-
-

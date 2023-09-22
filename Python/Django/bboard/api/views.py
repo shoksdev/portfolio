@@ -18,12 +18,14 @@ def bbs(request):
         serializer = BbSerializer(bbs, many=True)
         return Response(serializer.data)
 
+
 class BbDetailView(RetrieveAPIView):
     queryset = Bb.objects.filter(is_active=True)
     serializer_class = BbDetailSerializer
 
+
 @api_view(['GET', 'POST'])
-@permission_classes((IsAuthenticatedOrReadOnly, ))
+@permission_classes((IsAuthenticatedOrReadOnly,))
 def comments(request, pk):
     if request.method == 'POST':
         serializer = CommentSerializer(data=request.data)

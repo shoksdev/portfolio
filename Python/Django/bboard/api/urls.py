@@ -8,4 +8,3 @@ urlpatterns = [
     path('bbs/<int:pk>/', BbDetailView.as_view()),
     path('bbs/', bbs),
 ]
-

@@ -2,7 +2,6 @@ from django import forms
 from .models import AdvUser, SuperRubric, SubRubric
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
-from .apps import user_registered
 from django.forms import inlineformset_factory
 from .models import Bb, AdditionalImage
 from captcha.fields import CaptchaField
@@ -40,7 +39,6 @@ class RegisterUserForm(forms.ModelForm):
         user.is_activated = False
         if commit:
             user.save()
-        user_registered.send(RegisterUserForm, instance=user)
         return user
 
     class Meta:
@@ -78,8 +76,3 @@ class GuestCommentForm(forms.ModelForm):
         model = Comment
         exclude = ('is_active',)
         widjets = {'bb': forms.HiddenInput}
-
-
-
-
-
