@@ -1,16 +1,19 @@
 FROM python
 
+WORKDIR /warehouse
+
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONNUNBUFFERED 1
 
-WORKDIR /usr/src/kwork
+RUN apt-get update \
+    && apt-get install netcat-traditional -y
+RUN apt-get upgrade -y && apt-get install -y postgresql gcc python3-dev musl-dev
 
-COPY requirements.txt ./
+RUN pip install --upgrade pip
+
+COPY ./requirements.txt .
+
 RUN pip install -r requirements.txt
 
-COPY . /usr/src/kwork
+COPY . .
 
-#EXPOSE 8000
-
-#CMD ["python", "manage.py", "migrate"]
-#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["/usr/src/warehouse/entrypoint.sh"]

@@ -11,25 +11,25 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os.path
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()  # Используем метод для того, чтобы вытянуть переменные окружения в наш проект из файла .env
 
-EMAIL_PORT = 1025
+AUTH_USER_MODEL = 'main.AdvUser'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-llb=4hd8$52c5p1k2)pmq(308u++zk9by3-g8bip(e2ni&wd7-'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = []
-
-AUTH_USER_MODEL = 'main.AdvUser'
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -41,13 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
+    'api.apps.ApiConfig',
     'bootstrap4',
     'django_cleanup',
     'easy_thumbnails',
     'captcha',
     'rest_framework',
     'corsheaders',
-    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,20 +81,6 @@ TEMPLATES = [
     },
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-THUMBNAIL_ALIASES = {
-    '': {
-        'default': {
-            'size': (96, 96),
-            'crop': 'scale',
-        },
-    },
-}
-
-THUMBNAIL_BASEDIR = 'thumbnails'
-
 WSGI_APPLICATION = 'bboard.wsgi.application'
 
 
@@ -103,8 +89,12 @@ WSGI_APPLICATION = 'bboard.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'bboard.data'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('POSTGRES_NAME'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT')
     }
 }
 
@@ -147,7 +137,23 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'default': {
+            'size': (96, 96),
+            'crop': 'scale',
+        },
+    },
+}
+
+THUMBNAIL_BASEDIR = 'thumbnails'
+
+EMAIL_PORT = 1025

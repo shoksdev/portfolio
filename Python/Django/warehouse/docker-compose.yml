@@ -1,26 +1,23 @@
-version: '3.11'
+version: '3.7'
 
 services:
-  postgres:
-    image: postgres
-    container_name: postgres
-    env_file:
-      - .env
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
-    ports:
-      - '5432:5432'
-
   django:
     build: .
-    command:
-      - python /usr/src/kwork/manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/usr/src/kwork
+      - .:/usr/src/warehouse/
     ports:
       - 8000:8000
+    env_file:
+      - .env
     depends_on:
       - postgres
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
 
 volumes:
   postgres_data:
